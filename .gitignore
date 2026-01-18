@@ -1,0 +1,5 @@
+tistory_cookies.pkl
+__pycache__/
+*.pyc
+.venv/
+venv/
