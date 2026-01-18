@@ -24,7 +24,7 @@ jobs:
 
     - name: 라이브러리 설치
       run: |
-        pip install google-generativeai selenium webdriver-manager feedparser beautifulsoup4 requests pyperclip
+        pip install google-genai google-generativeai selenium webdriver-manager feedparser beautifulsoup4 requests pyperclip
 
     - name: 봇 실행
       env:
