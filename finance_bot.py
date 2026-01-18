@@ -241,10 +241,27 @@ def post_to_tistory(title, content):
 
     # 2. 새로고침 (로그인 적용) 및 글쓰기 이동
     driver.refresh()
-    time.sleep(2)
+    time.sleep(3)
     
-    write_url = f"https://{BLOG_NAME}.tistory.com/manage/post"
+    # 글쓰기 페이지 URL (manage/post가 아니라 manage/newpost 권장)
+    write_url = "https://techeverything.tistory.com/manage/newpost" 
     driver.get(write_url)
+    time.sleep(5) # 로딩 대기
+
+    # [중요] 로그인 성공 여부 확인 (URL 체크)
+    current_url = driver.current_url
+    print(f"📍 현재 URL: {current_url}")
+    
+    if "login" in current_url or "auth" in current_url:
+        print("❌ 로그인 실패! (로그인 페이지로 리다이렉트됨)")
+        print("💡 원인: GitHub Actions IP(해외) 차단 또는 쿠키 만료")
+        print("👉 해결책: 티스토리 설정 > '해외 로그인 차단' 해제 필요")
+        # 여기서 강제로 에러를 내야 Actions가 '실패'로 뜸
+        import sys
+        sys.exit(1)
+        
+    if "manage" not in current_url:
+        print(f"⚠️ 경고: 예상치 못한 페이지입니다. 글쓰기가 불가능할 수 있습니다.")
 
     # 🚨 [핵심] 팝업창(Alert) 무조건 닫기 (강력한 방어막)
     try:
