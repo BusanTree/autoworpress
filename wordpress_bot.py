@@ -137,9 +137,8 @@ def generate_blog_content(news_text):
     
     예시: "미국 증시 3% 급등! 금리 동결이 주는 5가지 기회"
 
-    [📋 글 구조 (3,000자 이상)]
+    [📋 글 구조 예시 (3,000자 이상, 실제 출력 시 메타 설명 없이 내용만)]
     
-    <p><strong>오프닝 (친근하게 시작)</strong></p>
     <p>오늘 미국 주식 시장에서 중요한 일이 있었어요! 처음 듣는 용어가 많으실 텐데, 하나씩 쉽게 설명해드릴게요.</p>
     
     <h2>📊 오늘의 핵심 3줄 요약</h2>
@@ -151,17 +150,17 @@ def generate_blog_content(news_text):
     
     <h2>💰 오늘의 주요 뉴스 쉽게 풀어보기</h2>
     
-    (각 뉴스마다 위의 형식대로 작성)
+    (각 뉴스마다 위의 형식대로 작성, "📰 뉴스 요약:" 같은 라벨은 포함하되 "오프닝(친근하게)" 같은 메타 설명은 절대 쓰지 말 것!)
     
     <h2>💡 완전 초보자를 위한 투자 가이드</h2>
     <ul>
-        <li><strong>지금 당장:</strong> (쉬운 조언)</li>
-        <li><strong>1~3개월:</strong> (쉬운 조언)</li>
-        <li><strong>장기적으로:</strong> (쉬운 조언)</li>
+        <li><strong>지금 당장:</strong> 쉬운 조언 (메타 설명 없이 바로 내용)</li>
+        <li><strong>1~3개월:</strong> 쉬운 조언</li>
+        <li><strong>장기적으로:</strong> 쉬운 조언</li>
     </ul>
     
     <h2>📰 참고 뉴스 원문</h2>
-    <p><strong>⚠️ 필수: 아래 뉴스 데이터의 모든 링크를 반드시 포함하세요!</strong></p>
+    <p><strong>⚠️ 필수: 아래 뉴스 데이터의 모든 링크를 반드시 포함!</strong></p>
     <ul>
         <li><a href="실제URL1" target="_blank" rel="noopener">뉴스1 제목</a></li>
         <li><a href="실제URL2" target="_blank" rel="noopener">뉴스2 제목</a></li>
@@ -176,6 +175,7 @@ def generate_blog_content(news_text):
     3. **각 뉴스마다 "📰 뉴스 요약" + "🤔 쉽게 풀어보면" 필수!**
     4. **참고 뉴스 원문 링크를 모두 포함! (하나도 빠뜨리지 말 것)**
     5. **비유와 구체적 숫자 예시 필수 사용!**
+    6. **"오프닝(친근하게)" 같은 메타 설명 절대 포함하지 말 것! 실제 내용만 작성!**
 
     [오늘의 뉴스 데이터]
     {news_text}
@@ -187,13 +187,14 @@ def generate_blog_content(news_text):
     }}}}
     """
 
-    # Gemini 2.0 Flash 모델로 고품질 콘텐츠 생성
-    model = genai.GenerativeModel('gemini-2.0-flash-exp')
+    # Gemini 1.5 Pro - 더 길고 안정적인 출력, 글 잘림 방지
+    model = genai.GenerativeModel('gemini-1.5-pro')
     response = model.generate_content(
         prompt,
         generation_config=genai.types.GenerationConfig(
-            temperature=0.9,  # 창의성 최대화
-            max_output_tokens=8000,  # 긴 심층 분석 가능
+            temperature=0.8,  # 창의성과 일관성 균형
+            max_output_tokens=12000,  # 긴 글도 잘리지 않게
+            top_p=0.95,  # 다양한 표현
         )
     )
     
