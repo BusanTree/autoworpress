@@ -19,7 +19,8 @@ try:
         POST_STATUS as CONFIG_POST_STATUS
     )
 except ImportError:
-    # config.py가 없으면 기본값 사용 (GitHub Actions용)
+    # config.py가 없으면 환경 변수만 사용 (GitHub Actions용)
+    print("⚠️ config.py 없음 - 환경 변수 사용")
     CONFIG_GEMINI_KEY = ""
     CONFIG_WP_URL = ""
     CONFIG_WP_USER = ""
@@ -27,7 +28,7 @@ except ImportError:
     CONFIG_CATEGORY_ID = 1
     CONFIG_POST_STATUS = 'publish'
 
-# 환경 변수가 있으면 우선 사용 (GitHub Actions에서 실행 시)
+# 환경 변수가 있으면 우선 사용 (보안!)
 GEMINI_API_KEY = os.environ.get('GEMINI_API_KEY', CONFIG_GEMINI_KEY)
 WORDPRESS_URL = os.environ.get('WORDPRESS_URL', CONFIG_WP_URL)
 WORDPRESS_USERNAME = os.environ.get('WORDPRESS_USERNAME', CONFIG_WP_USER)
@@ -187,8 +188,8 @@ def generate_blog_content(news_text):
     }}}}
     """
 
-    # Gemini 1.5 Flash - 안정적이고 빠른 모델
-    model = genai.GenerativeModel('gemini-1.5-flash')
+    # Gemini 2.0 Flash - 안정적이고 빠른 최신 모델
+    model = genai.GenerativeModel('gemini-2.0-flash-exp')
     response = model.generate_content(
         prompt,
         generation_config=genai.types.GenerationConfig(
