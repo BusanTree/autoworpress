@@ -82,14 +82,17 @@ def get_finance_image_from_unsplash():
         return None
     
     try:
-        # 금융 관련 키워드 랜덤 선택
+        # 금융 관련 키워드 - 더 구체적으로
         import random
         keywords = [
-            "finance graph chart",
-            "stock market trading",
-            "business analytics data",
-            "economy growth chart",
-            "financial report laptop"
+            "stock market chart screen",  # 주식 차트 화면
+            "financial trading graph",     # 금융 거래 그래프
+            "money investment business",   # 투자 비즈니스
+            "economy dollar currency",     # 달러 통화
+            "wall street stock exchange",  # 월스트리트 증권거래소
+            "cryptocurrency bitcoin chart", # 암호화폐 차트
+            "forex trading chart",         # 외환 거래 차트
+            "stock market bull bear"       # 주식시장 불/베어
         ]
         query = random.choice(keywords)
         
