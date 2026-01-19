@@ -3,3 +3,6 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# 워드프레스 설정 (민감 정보 포함)
+config.py

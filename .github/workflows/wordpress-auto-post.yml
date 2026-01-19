@@ -1,0 +1,47 @@
+name: WordPress Auto Poster
+
+on:
+  schedule:
+    # 매일 오전 7시 (한국 시간 KST = UTC+9)
+    # UTC 기준: 오후 10시 (전날)
+    - cron: '0 22 * * *'
+  
+  # 수동 실행도 가능하도록 설정
+  workflow_dispatch:
+
+jobs:
+  post-to-wordpress:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 체크아웃
+      uses: actions/checkout@v4
+    
+    - name: Python 설정
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+    
+    - name: 의존성 설치
+      run: |
+        pip install google-generativeai feedparser requests
+    
+    - name: 워드프레스 자동 포스팅 실행
+      env:
+        GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        WORDPRESS_URL: ${{ secrets.WORDPRESS_URL }}
+        WORDPRESS_USERNAME: ${{ secrets.WORDPRESS_USERNAME }}
+        WORDPRESS_APP_PASSWORD: ${{ secrets.WORDPRESS_APP_PASSWORD }}
+        WORDPRESS_CATEGORY_ID: ${{ secrets.WORDPRESS_CATEGORY_ID }}
+        POST_STATUS: 'publish'
+      run: |
+        python wordpress_bot.py
+    
+    - name: 실행 완료 알림
+      if: success()
+      run: echo "✅ 워드프레스 포스팅 완료!"
+    
+    - name: 실행 실패 알림
+      if: failure()
+      run: echo "❌ 워드프레스 포스팅 실패!"

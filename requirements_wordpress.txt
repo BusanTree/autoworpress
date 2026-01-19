@@ -1,0 +1,13 @@
+# 워드프레스 자동 포스팅 필수 패키지
+
+# Gemini AI
+google-generativeai>=0.3.0
+
+# RSS 피드 파싱
+feedparser>=6.0.10
+
+# HTTP 요청 (워드프레스 REST API)
+requests>=2.31.0
+
+# 날짜/시간 처리 (기본 라이브러리이지만 명시)
+# datetime (Python 내장)
