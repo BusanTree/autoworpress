@@ -187,13 +187,13 @@ def generate_blog_content(news_text):
     }}}}
     """
 
-    # Gemini 1.5 Pro - 더 길고 안정적인 출력, 글 잘림 방지
-    model = genai.GenerativeModel('gemini-1.5-pro')
+    # Gemini 2.5 Flash - 최신 모델, 빠르고 안정적, 긴 출력 지원
+    model = genai.GenerativeModel('gemini-2.5-flash-latest')
     response = model.generate_content(
         prompt,
         generation_config=genai.types.GenerationConfig(
             temperature=0.8,  # 창의성과 일관성 균형
-            max_output_tokens=12000,  # 긴 글도 잘리지 않게
+            max_output_tokens=8192,  # 2.5 Flash의 최대 출력
             top_p=0.95,  # 다양한 표현
         )
     )
