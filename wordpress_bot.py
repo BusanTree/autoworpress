@@ -187,14 +187,14 @@ def generate_blog_content(news_text):
     }}}}
     """
 
-    # Gemini 2.5 Flash - 최신 모델, 빠르고 안정적, 긴 출력 지원
-    model = genai.GenerativeModel('gemini-2.5-flash-latest')
+    # Gemini 1.5 Flash - 안정적이고 빠른 모델
+    model = genai.GenerativeModel('gemini-1.5-flash')
     response = model.generate_content(
         prompt,
         generation_config=genai.types.GenerationConfig(
-            temperature=0.8,  # 창의성과 일관성 균형
-            max_output_tokens=8192,  # 2.5 Flash의 최대 출력
-            top_p=0.95,  # 다양한 표현
+            temperature=0.8,
+            max_output_tokens=8192,
+            top_p=0.95,
         )
     )
     
