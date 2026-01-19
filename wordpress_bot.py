@@ -197,8 +197,8 @@ def generate_blog_content(news_text):
     }}}}
     """
 
-    # Gemini 2.0 Flash - 안정적이고 빠른 최신 모델
-    model = genai.GenerativeModel('gemini-2.0-flash-exp')
+    # Gemini 2.5 Flash - 최신 모델, 안정적이고 긴 출력
+    model = genai.GenerativeModel('gemini-2.5-flash')
     response = model.generate_content(
         prompt,
         generation_config=genai.types.GenerationConfig(
